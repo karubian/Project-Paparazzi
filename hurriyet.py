@@ -38,6 +38,7 @@ paths = ["/kelebek/365-gun-iyi-yasam/",
 "/kelebek/televizyon/",
 "/kelebek/yarim-kalan-hayatlar/"]
 
+# 
 for path in paths:
     for x in range(0,99999,50):
         print("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
