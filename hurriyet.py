@@ -24,11 +24,13 @@ paths = ["/kelebek/365-gun-iyi-yasam/",
 "/kelebek/keyif/dugun-mevsimi/",
 "/kelebek/gurme/",
 "/kelebek/hayat/",
+         # hayat not finished
 "/kelebek/blog/hilal-meric/",
 "/kelebek/hurriyet-cumartesi/",
 "/kelebek/hurriyet-pazar/",
 "/son-dakika-haberleri/kelebek/",
 "/kelebek/keyif/",
+         # keyif not finished 6250
 "/kelebek/stil/kombin-sayfasi/",
 "/kelebek/magazin/",
 "/kelebek/blog/pinar-oznur/",
@@ -38,7 +40,7 @@ paths = ["/kelebek/365-gun-iyi-yasam/",
 "/kelebek/televizyon/",
 "/kelebek/yarim-kalan-hayatlar/"]
 
-# 
+#
 for path in paths:
     for x in range(0,99999,50):
         print("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
@@ -77,7 +79,13 @@ for path in paths:
                 article['StartDate'] = datetime.datetime.strptime(article['StartDate'], "%Y-%m-%dT%H:%M:%S%fZ")
 
         kelebek = db['kelebek_all']
-        kelebek.insert_many(data)
+        try:
+            kelebek.insert_many(data)
+        except pymongo.errors.BulkWriteError as bwe:
+            # Incase of duplicate errors.
+            print(bwe.details)
+
+
 
 
 # For getting all the paths as text.
