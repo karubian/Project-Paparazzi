@@ -16,7 +16,7 @@ articleFile = open('article.txt', 'w', encoding=encoding)
 
 def get_links():
     base_url = "http://www.sabah.com.tr"
-    page_count = 4300
+    page_count = 4330
     url = "http://www.sabah.com.tr/arama?query=&categorytype=haber&selectedcategory=magazin&page=" + str(page_count)
     result = requests.get(url)
     c = result.content
@@ -29,8 +29,13 @@ def get_links():
         for item in page_figures:
             page_links = item.find('a')
             anchor_link = page_links.get("href")
+            if str(anchor_link)[0:4] == "http":
+                post_link = anchor_link
+            else:
+                print(anchor_link)
+                post_link = base_url + anchor_link
             post_title = page_links.contents[0]
-            post_link = base_url + anchor_link
+
             print(post_link)
             #html'den tagCategory'den de kontrol edebilirmisim.
             try:
@@ -98,8 +103,8 @@ for link in urls:
 errorfile = open('errors.txt', 'w')
 for item in error_urls:
     errorfile.write("%s\n" % item)
-
+errorfile.close()
 skippedfile = open('errorsSkipped.txt', 'w')
 for item in skipped_urls:
     skippedfile.write("%s\n" % item)
-
+skippedfile.close()
