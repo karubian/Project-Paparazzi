@@ -3,6 +3,41 @@ import sys
 import pymongo
 import json
 import datetime
+import requests
+from bs4 import BeautifulSoup
+import time
+
+
+def get_article_detail(post_info):
+    url = post_info["url"]
+    result = ''
+    article_text = ''
+    try_count = 0
+    while result == '':
+        try:
+            result = requests.get(url)
+        except:
+            if try_count > 2:
+                print("Tried 2 times but still no meaningful response so skip")
+                error_flag = 1
+                #skipped_urls.append(url)
+                return article_text, error_flag
+            time.sleep(5)
+            print("-_- Sleep -_-")
+            try_count += 1
+            continue
+    c = result.content
+    error_flag = 0
+    soup = BeautifulSoup(c, "html5lib")
+    try:
+        article = soup.find("div", {"class": "news-detail-text"}).find_all('p')
+        for element in article:
+            article_text += '\n' + ''.join(element.find_all(text=True))
+    except:
+        #error_urls.append(url)
+        error_flag = 1
+        print("bom")
+    return article_text, error_flag
 
 uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
 client = pymongo.MongoClient(uri)
@@ -15,23 +50,23 @@ headers = {
     'apikey': "4c67720b046a4743aba6979181505cef"
     }
 
-paths = ["/kelebek/365-gun-iyi-yasam/",
-"/kelebek/arcelikin-gozunde-tum-anneler-kralicedir/",
-"/kelebek/astroloji/",
-"/kelebek/bir-karede-istanbul/",
-"/kelebek/blog/",
-"/kelebek/blog/dilara-gozalan/",
-"/kelebek/keyif/dugun-mevsimi/",
-"/kelebek/gurme/",
-"/kelebek/hayat/",
-         # hayat not finished
-"/kelebek/blog/hilal-meric/",
-"/kelebek/hurriyet-cumartesi/",
-"/kelebek/hurriyet-pazar/",
-"/son-dakika-haberleri/kelebek/",
-"/kelebek/keyif/",
-         # keyif not finished 6250
-"/kelebek/stil/kombin-sayfasi/",
+paths = [#"/kelebek/365-gun-iyi-yasam/",
+# "/kelebek/arcelikin-gozunde-tum-anneler-kralicedir/",
+# "/kelebek/astroloji/",
+# "/kelebek/bir-karede-istanbul/",
+# "/kelebek/blog/",
+# "/kelebek/blog/dilara-gozalan/",
+# "/kelebek/keyif/dugun-mevsimi/",
+# "/kelebek/gurme/",
+# "/kelebek/hayat/",
+#          # hayat not finished
+# "/kelebek/blog/hilal-meric/",
+# "/kelebek/hurriyet-cumartesi/",
+# "/kelebek/hurriyet-pazar/",
+# "/son-dakika-haberleri/kelebek/",
+# "/kelebek/keyif/",
+#          # keyif not finished 6250
+# "/kelebek/stil/kombin-sayfasi/",
 "/kelebek/magazin/",
 "/kelebek/blog/pinar-oznur/",
 "/kelebek/gurme/restoranlar-haberleri/",
@@ -60,30 +95,49 @@ for path in paths:
             break
 
         for article in data:
-            article['_id'] = article['Id']
+            article['localId'] = article['Id']
+            try:
+                article['date'] = datetime.datetime.strptime(article['CreatedDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
+            except ValueError:
+                article['date'] = datetime.datetime.strptime(article['CreatedDate'], "%Y-%m-%dT%H:%M:%S%fZ")
+
+            article['source'] = "hürriyet"
+            article['contentType'] = "article"
+            article['url'] = article['Url']
+            article['hash'] = ""
+            article['description'] = article['Description']
+            article['location'] = ''
+            article['famousName'] = []
+            article['tags'] = article['Tags']
+            article['media'] = []
+            for photo in article['Files']:
+                article['media'].append(photo['FileUrl'])
+            article['title'] = article['Title']
+
             del article['Id']
-            # Because the date formats differ from one article to another we have to check both formats
-            try:
-                article['CreatedDate'] = datetime.datetime.strptime(article['CreatedDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                article['CreatedDate'] = datetime.datetime.strptime(article['CreatedDate'], "%Y-%m-%dT%H:%M:%S%fZ")
+            del article['ContentType']
+            del article['Files']
+            del article['Url']
+            del article['ModifiedDate']
+            del article['Path']
+            del article['StartDate']
+            del article['Tags']
+            del article['Title']
+            del article['CreatedDate']
+            del article['Description']
 
-            try:
-                article['ModifiedDate'] = datetime.datetime.strptime(article['ModifiedDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                article['ModifiedDate'] = datetime.datetime.strptime(article['ModifiedDate'], "%Y-%m-%dT%H:%M:%S%fZ")
+            article['text'] = get_article_detail(article)[0]
 
-            try:
-                article['StartDate'] = datetime.datetime.strptime(article['StartDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                article['StartDate'] = datetime.datetime.strptime(article['StartDate'], "%Y-%m-%dT%H:%M:%S%fZ")
 
-        kelebek = db['kelebek_all']
+        news = db['news']
         try:
-            kelebek.insert_many(data)
+            print(data)
+            #news.insert_many(data)
         except pymongo.errors.BulkWriteError as bwe:
             # Incase of duplicate errors.
             print(bwe.details)
+
+        client.close()
 
 
 
@@ -100,5 +154,5 @@ for path in paths:
 #     data = json.loads(res.read())
 #     print(data)
 
-client.close()
+
 

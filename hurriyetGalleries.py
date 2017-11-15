@@ -1,5 +1,4 @@
 import http.client
-import sys
 import pymongo
 import json
 import datetime
@@ -15,14 +14,7 @@ headers = {
     'apikey': "4c67720b046a4743aba6979181505cef"
     }
 
-paths = ["/kelebek/365-gun-iyi-yasam/",
-"/kelebek/arcelikin-gozunde-tum-anneler-kralicedir/",
-"/kelebek/astroloji/",
-"/kelebek/bir-karede-istanbul/",
-"/kelebek/blog/",
-"/kelebek/blog/dilara-gozalan/",
-"/kelebek/keyif/dugun-mevsimi/",
-"/kelebek/gurme/",
+paths = ["/kelebek/gurme/",
 "/kelebek/hayat/",
          # hayat not finished
 "/kelebek/blog/hilal-meric/",
@@ -31,56 +23,75 @@ paths = ["/kelebek/365-gun-iyi-yasam/",
 "/son-dakika-haberleri/kelebek/",
 "/kelebek/keyif/",
          # keyif not finished 6250
-"/kelebek/stil/kombin-sayfasi/",
 "/kelebek/magazin/",
 "/kelebek/blog/pinar-oznur/",
-"/kelebek/gurme/restoranlar-haberleri/",
-"/kelebek/saglik/",
-"/kelebek/stil/",
-"/kelebek/televizyon/",
-"/kelebek/yarim-kalan-hayatlar/"]
+"/kelebek/televizyon/"]
 
 #
 for path in paths:
-    for x in range(0,99999,50):
+    for x in range(0,1000000,50):
         print("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
-        conn.request("GET", "/v1/articles?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
+        conn.request("GET", "/v1/newsphotogalleries?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
                      headers=headers)
         res = conn.getresponse()
 
         while(res.getcode() != 200):
             print(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
-            conn.request("GET", "/v1/articles?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
+            conn.request("GET", "/v1/newsphotogalleries?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
                          headers=headers)
             res = conn.getresponse()
 
         data = json.loads(res.read())
         if(len(data) == 0):
-            print("No more articles in path : '" + path + "'")
+            print("No more galleries in path : '" + path + "'")
             break
 
-        for article in data:
-            article['_id'] = article['Id']
-            del article['Id']
+        for gallery in data:
+            gallery['localId'] = gallery['Id']
+            try:
+                gallery['date'] = datetime.datetime.strptime(gallery['CreatedDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
+            except ValueError:
+                gallery['date'] = datetime.datetime.strptime(gallery['CreatedDate'], "%Y-%m-%dT%H:%M:%S%fZ")
+
+            gallery['source'] = "hürriyet"
+            gallery['contentType'] = "Gallery"
+            gallery['url'] = gallery['Url']
+            gallery['hash'] = ""
+            text = ""
+            for photo in gallery['Files']:
+                text += " " + photo['Metadata']['Description']
+
+            gallery['text'] = text
+            gallery['description'] = gallery['Description']
+            gallery['location'] = ''
+            gallery['famousName'] = []
+            gallery['tags'] = gallery['Tags']
+            gallery['media'] = []
+            for photo in gallery['Files']:
+                gallery['media'].append(photo['FileUrl'])
+
+            gallery['title'] = gallery['Title']
+
+
+            del gallery['Id']
+            del gallery['ContentType']
+            del gallery['Files']
+            del gallery['Url']
+            del gallery['ModifiedDate']
+            del gallery['Path']
+            del gallery['StartDate']
+            del gallery['Tags']
+            del gallery['Title']
+            del gallery['CreatedDate']
+            del gallery['Description']
+
             # Because the date formats differ from one article to another we have to check both formats
-            try:
-                article['CreatedDate'] = datetime.datetime.strptime(article['CreatedDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                article['CreatedDate'] = datetime.datetime.strptime(article['CreatedDate'], "%Y-%m-%dT%H:%M:%S%fZ")
 
-            try:
-                article['ModifiedDate'] = datetime.datetime.strptime(article['ModifiedDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                article['ModifiedDate'] = datetime.datetime.strptime(article['ModifiedDate'], "%Y-%m-%dT%H:%M:%S%fZ")
 
-            try:
-                article['StartDate'] = datetime.datetime.strptime(article['StartDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                article['StartDate'] = datetime.datetime.strptime(article['StartDate'], "%Y-%m-%dT%H:%M:%S%fZ")
-
-        kelebek = db['kelebek_all']
+        news = db['news']
         try:
-            kelebek.insert_many(data)
+            print(data)
+            #news.insert_many(data)
         except pymongo.errors.BulkWriteError as bwe:
             # Incase of duplicate errors.
             print(bwe.details)
