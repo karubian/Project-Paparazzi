@@ -6,7 +6,7 @@ print(d['feed']['title'])
 
 print(len(d['entries']))
 
-for i in range(50):
+for i in range(20):
     print(d['entries'][i]['title'])
     print(d['entries'][i]['link'])
 
