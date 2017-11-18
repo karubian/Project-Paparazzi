@@ -27,7 +27,9 @@ def get_rss(rss_url):
                         break
                 print("Found " + str(i) + " new articles in " + threading.currentThread().name)
                 for j in range(i):
+                    # write the new articles to the database here
                     print(d['entries'][j]['link'])
+                rss_array = d['entries'].copy()
             print(threading.currentThread().name + ' is sleeping for 5 minutes')
             time.sleep(300)
             print(threading.currentThread().name + ' has woken up')
