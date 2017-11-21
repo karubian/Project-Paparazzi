@@ -64,7 +64,7 @@ def get_article_detail_haberturk(post_url):
 
             title = article_json["headline"]
             date = article_json["datePublished"][:19:]
-            datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
+            date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
             media = soup.find("div", {"class": "news-detail-featured-img"})
             # for item in soup.find_all("div", {"class": "photo-news-list-img"}):
             #     media_array.append(item.img["data-img-src"])
@@ -87,19 +87,6 @@ def get_article_detail_haberturk(post_url):
                 "text": body
             }
             print(res["text"])
-            # article['source'] = "hürriyet"
-            # article['contentType'] = "article"
-            # article['url'] = article['Url']
-            # article['hash'] = ""
-            # article['description'] = article['Description']
-            # article['location'] = ''
-            # article['famousName'] = []
-            # article['tags'] = article['Tags']
-            # article['media'] = []
-            # for photo in article['Files']:
-            #     article['media'].append(photo['FileUrl'])
-            # article['title'] = article['Title']
-            # text
     except:
         error_urls.append(url)
         error_flag = 1
@@ -107,25 +94,69 @@ def get_article_detail_haberturk(post_url):
     return article_text, error_flag
 
 
-get_article_detail_haberturk("http://www.haberturk.com/magazin/herkes-bunu-konusuyor/haber/589862-magazadan-kovdurttum")
-# def insert_details(path):
-#     news_posts = db.kelebek_all.find({"Path": path})
-#     i = 0
-#     for doc in news_posts:
-#         print(doc["Url"])
-#         if get_article_detail(doc)[1] == 0:
-#             db.magazine_details_berk.insert_one({'Title': doc["Title"], 'Url': doc["Url"],
-#                                             "ModifiedDate": doc["ModifiedDate"],
-#                                             "_id": doc["_id"], "Description": doc["Description"],
-#                                             "Tags": doc["Tags"],
-#                                             "Text": get_article_detail(doc)})
-#         print(i)
-#         i = i + 1
-#
-# insert_details(news_path)
-# errorfile = open('errors.txt', 'w')
-# for item in error_urls:
-#   errorfile.write("%s\n" % item)
-# skippedfile = open('errorsSkipped.txt', 'w')
-# for item in skipped_urls:
-#     skippedfile.write("%s\n" % item)
+def get_article_detail_sabah(post_url):
+    url = post_url
+    article_text = ''
+    while True:
+        result = ''
+        try:
+            result = requests.get(url)
+        except:
+            skipped_urls.append(url)
+            return
+
+        error_flag = 0
+        soup = BeautifulSoup(result.content, "html.parser")
+        try:
+            article = soup.find("div", {"class": "newsBox"}).find_all('p')
+            for element in article:
+                article_text = article_text + '\n' + ''.join(element.find_all(text=True))
+
+            try:
+                next_page = soup.find("li", {"class": "next"}).find("a")["href"]
+            except:
+                break
+
+            splitted_url = url.split("=")
+            if len(url.split("?")) > 1:
+                splitted_url[-1] = str(next_page).split("=")[-1]
+            else:
+                url += next_page
+
+            url = "=".join(splitted_url)
+            print(url)
+
+            print(article_text)
+        except:
+            error_flag = 1
+            print("bom")
+        title = soup.find("meta", {"itemprop": "name"})['content'].text
+        date = soup.find("meta", {"itemprop": "dateModified"})['content'].text
+        date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
+        media = soup.find("div", {"class": "news-detail-featured-img"})
+        # for item in soup.find_all("div", {"class": "photo-news-list-img"}):
+        #     media_array.append(item.img["data-img-src"])
+
+        #TODODOODODODODODODODO
+        content_type = "article"
+        description = article_json["description"]
+        body = article_json["articleBody"]
+        res = {
+            "localId": news_id,
+            "date": date,
+            "source": "habertürk",
+            "contentType": content_type,
+            "url": post_url,
+            "hash": "",
+            "description": description,
+            "location": "",
+            "famousName": [],
+            "tags": keywords,
+            "media": "" if media is None else media.img["src"],
+            "title": title,
+            "text": body
+        }
+    return article_text, error_flag
+
+
+get_article_detail_sabah("https://www.sabah.com.tr/magazin/2017/11/21/tuvana-turkay-ile-fenerbahceli-futbolcu-alper-potukun-ayrildigi-iddia-edildi?paging=1")
