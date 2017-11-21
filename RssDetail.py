@@ -13,6 +13,8 @@ news_path = "/kelebek/magazin/"
 
 error_urls = []
 skipped_urls = []
+
+
 ################# HABERTURK ####################################################################
 
 def get_article_detail_haberturk(post_url):
@@ -42,7 +44,13 @@ def get_article_detail_haberturk(post_url):
             pass
         else:
             article_info = soup.find_all('script', {'type': 'application/ld+json'})
-            article_json = json.loads(article_info[0].text)
+            article_info_text = article_info[0].text
+            article_info_tokenized = article_info_text.split("\"")
+            i = 0
+            for item in article_info_tokenized:
+                article_info_tokenized[i] = " ".join(item.split())
+                i += 1
+            article_json = json.loads("\"".join(article_info_tokenized))
             keywords = str(json.loads(article_info[1].text)["keywords"]).split(",")
             i = 0
             for item in keywords:
@@ -57,7 +65,7 @@ def get_article_detail_haberturk(post_url):
             title = article_json["headline"]
             date = article_json["datePublished"][:19:]
             datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
-            media = soup.find("div",{"class":"news-detail-featured-img"})
+            media = soup.find("div", {"class": "news-detail-featured-img"})
             # for item in soup.find_all("div", {"class": "photo-news-list-img"}):
             #     media_array.append(item.img["data-img-src"])
             content_type = "article"
@@ -74,11 +82,11 @@ def get_article_detail_haberturk(post_url):
                 "location": "",
                 "famousName": [],
                 "tags": keywords,
-                "media": media.img["src"],
+                "media": "" if media is None else media.img["src"],
                 "title": title,
                 "text": body
             }
-            print(res)
+            print(res["text"])
             # article['source'] = "hürriyet"
             # article['contentType'] = "article"
             # article['url'] = article['Url']
@@ -99,7 +107,7 @@ def get_article_detail_haberturk(post_url):
     return article_text, error_flag
 
 
-get_article_detail_haberturk("http://www.haberturk.com/nato-genel-sekreteri-cumhurbaskani-erdogan-dan-ozur-diledi-1719618")
+get_article_detail_haberturk("http://www.haberturk.com/magazin/herkes-bunu-konusuyor/haber/589862-magazadan-kovdurttum")
 # def insert_details(path):
 #     news_posts = db.kelebek_all.find({"Path": path})
 #     i = 0
