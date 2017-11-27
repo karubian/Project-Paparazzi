@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
 import pymongo
 import time
+import traceback
 
 uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
 client = pymongo.MongoClient(uri)
@@ -42,7 +44,7 @@ def get_article_detail(post_info):
     except:
         error_urls.append(url)
         error_flag = 1
-        print("bom")
+        traceback.print_exc()
     return article_text,error_flag
 
 

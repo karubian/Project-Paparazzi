@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import datetime
 import time
 import json
+import traceback
 
 # uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
 # client = pymongo.MongoClient(uri)
@@ -90,7 +91,7 @@ def get_article_detail_haberturk(post_url):
     except:
         error_urls.append(url)
         error_flag = 1
-        print("bom")
+        traceback.print_exc()
     return article_text, error_flag
 
 
@@ -103,6 +104,7 @@ def get_article_detail_sabah(post_url):
             result = requests.get(url)
         except:
             skipped_urls.append(url)
+            traceback.print_exc()
             return
 
         error_flag = 0
@@ -129,7 +131,7 @@ def get_article_detail_sabah(post_url):
             print(article_text)
         except:
             error_flag = 1
-            print("bom")
+            traceback.print_exc()
         title = soup.find("meta", {"itemprop": "name"})['content'].text
         date = soup.find("meta", {"itemprop": "dateModified"})['content'].text
         date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
@@ -159,4 +161,4 @@ def get_article_detail_sabah(post_url):
     return article_text, error_flag
 
 
-get_article_detail_sabah("https://www.sabah.com.tr/magazin/2017/11/21/tuvana-turkay-ile-fenerbahceli-futbolcu-alper-potukun-ayrildigi-iddia-edildi?paging=1")
+#get_article_detail_sabah("https://www.sabah.com.tr/magazin/2017/11/21/tuvana-turkay-ile-fenerbahceli-futbolcu-alper-potukun-ayrildigi-iddia-edildi?paging=1")

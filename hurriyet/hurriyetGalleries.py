@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import http.client
 import pymongo
 import json
