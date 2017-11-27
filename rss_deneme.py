@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 import feedparser
 import threading
 import time
+import traceback
+import RssDetail
 
 thread_pool = []
 sabah = "https://www.sabah.com.tr/rss/anasayfa.xml"
@@ -32,6 +35,15 @@ def get_rss(rss_url):
                 print("Found " + str(i) + " new articles in " + threading.currentThread().name)
                 for j in range(i):
                     # write the new articles to the database here
+                    if(rss_url.startsWith("http://www.haberturk.com")):
+                        print("found haberturk")
+                        RssDetail.get_article_detail_haberturk(sorted_new_rss_array[j]['link'])
+                    elif(rss_url.startsWith("https://www.sabah.com.tr")):
+                        print("found sabah")
+                        #RssDetail.get_article_detail_haberturk(sorted_new_rss_array[j]['link'])
+                    elif (rss_url.startsWith("http://aa.com.tr")):
+                        print("found aa")
+                        #RssDetail.get_article_detail_haberturk(sorted_new_rss_array[j]['link'])
                     print(sorted_new_rss_array[j]['link'])
                 sorted_old_rss_array = sorted_new_rss_array.copy()
             print(threading.currentThread().name + ' is sleeping for 5 minutes')
@@ -39,6 +51,7 @@ def get_rss(rss_url):
             print(threading.currentThread().name + ' has woken up')
     except:
         print("Something went wrong in " + threading.currentThread().name)
+        traceback.print_exc()
         print(threading.currentThread().name + ' is sleeping for 5 minutes')
         time.sleep(300)
         print(threading.currentThread().name + ' has woken up')

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import tweepy
 import twitter_config as tw
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import http.client
 import sys
 import pymongo
@@ -6,6 +7,7 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 import time
+import traceback
 
 
 def get_article_detail(post_info):
@@ -33,10 +35,10 @@ def get_article_detail(post_info):
         article = soup.find("div", {"class": "news-detail-text"}).find_all('p')
         for element in article:
             article_text += '\n' + ''.join(element.find_all(text=True))
-    except:
+    except Exception as err:
         #error_urls.append(url)
         error_flag = 1
-        print("bom")
+        traceback.print_exc()
     return article_text, error_flag
 
 uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
@@ -89,7 +91,7 @@ for path in paths:
                          headers=headers)
             res = conn.getresponse()
 
-        data = json.loads(res.read())
+        data = json.loads(res.read().decode())
         if(len(data) == 0):
             print("No more articles in path : '" + path + "'")
             break

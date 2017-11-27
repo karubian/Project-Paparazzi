@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 
 APP_ACCESS_TOKEN = '6168565408.4a4eeb7.ccac4ddd5dbd474085db8c6d99c4d32e'
