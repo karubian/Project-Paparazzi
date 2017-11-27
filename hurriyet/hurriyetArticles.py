@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import traceback
+import logging
 
 
 def get_article_detail(post_info):
@@ -20,12 +21,12 @@ def get_article_detail(post_info):
             result = requests.get(url)
         except:
             if try_count > 2:
-                print("Tried 2 times but still no meaningful response so skip")
+                logging.error("Tried 2 times but still no meaningful response so skip")
                 error_flag = 1
                 #skipped_urls.append(url)
                 return article_text, error_flag
             time.sleep(5)
-            print("-_- Sleep -_-")
+            logging.error("-_- Sleep -_-")
             try_count += 1
             continue
     c = result.content
@@ -38,10 +39,11 @@ def get_article_detail(post_info):
     except Exception as err:
         #error_urls.append(url)
         error_flag = 1
-        traceback.print_exc()
+        logging.error("Exception ", exc_info=1)
+        logging.error(url)
     return article_text, error_flag
 
-uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
+uri = 'mongodb://localhost:27017/paparazzi'
 client = pymongo.MongoClient(uri)
 db = client.get_database('paparazzi')
 
@@ -78,22 +80,37 @@ paths = [#"/kelebek/365-gun-iyi-yasam/",
 "/kelebek/yarim-kalan-hayatlar/"]
 
 #
+
+logging.basicConfig(
+        format="%(asctime)s [%(threadName)-8.8s]  %(message)s",
+        handlers=[
+            logging.FileHandler("{0}/{1}.log".format(".", "hurriyet")),
+            logging.StreamHandler(sys.stdout)
+        ])
+
 for path in paths:
     for x in range(0,99999,50):
-        print("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
-        conn.request("GET", "/v1/articles?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
-                     headers=headers)
-        res = conn.getresponse()
+        logging.error("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
+        keep_trying = True
+        while (keep_trying):
+            try:
+                conn.request("GET", "/v1/articles?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
+                             headers=headers)
+                res = conn.getresponse()
+                keep_trying = False
+            except:
+                logging.error("Exception ", exc_info=1)
+                keep_trying = True
 
         while(res.getcode() != 200):
-            print(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
+            logging.error(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
             conn.request("GET", "/v1/articles?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
                          headers=headers)
             res = conn.getresponse()
 
         data = json.loads(res.read().decode())
         if(len(data) == 0):
-            print("No more articles in path : '" + path + "'")
+            logging.error("No more articles in path : '" + path + "'")
             break
 
         for article in data:
@@ -131,13 +148,8 @@ for path in paths:
             article['text'] = get_article_detail(article)[0]
 
 
-        news = db['news']
-        try:
-            print(data)
-            #news.insert_many(data)
-        except pymongo.errors.BulkWriteError as bwe:
-            # Incase of duplicate errors.
-            print(bwe.details)
+        news = db['raw_articles']
+        news.insert_many(data)
 
         client.close()
 
@@ -146,15 +158,15 @@ for path in paths:
 
 # For getting all the paths as text.
 # for x in range(0,2100,50):
-#     print("Requesting page : " + x.__str__())
+#     logging.error("Requesting page : " + x.__str__())
 #     conn.request("GET", "/v1/paths?$top=50&%24skip=" + x.__str__(), headers=headers)
 #     res = conn.getresponse()
 #     while(res.getcode() != 200):
-#         print(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
+#         logging.error(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
 #         conn.request("GET", "/v1/paths?$top=50&%24skip=" + x.__str__(), headers=headers)
 #         res = conn.getresponse()
 #     data = json.loads(res.read())
-#     print(data)
+#     logging.error(data)
 
 
 

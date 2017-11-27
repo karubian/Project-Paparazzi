@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
 import datetime
 import time
 import json
 import traceback
-
+import logging
+import sys
 # uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
 # client = pymongo.MongoClient(uri)
 # db = client.get_database('paparazzi')
@@ -19,6 +21,13 @@ skipped_urls = []
 ################# HABERTURK ####################################################################
 
 def get_article_detail_haberturk(post_url):
+    logging.basicConfig(
+        format="%(asctime)s [%(threadName)-8.8s]  %(message)s",
+        handlers=[
+            logging.FileHandler("{0}/{1}.log".format(".", "rssDetail")),
+            logging.StreamHandler(sys.stdout)
+        ])
+
     url = post_url
     result = ''
     article_text = ''
@@ -28,12 +37,12 @@ def get_article_detail_haberturk(post_url):
             result = requests.get(url)
         except:
             if try_count > 2:
-                print("Tried 2 times but still no meaningful response so skip")
+                logging.error("Tried 2 times but still no meaningful response so skip")
                 error_flag = 1
                 skipped_urls.append(url)
                 return article_text, error_flag
             time.sleep(5)
-            print("-_- Sleep -_-")
+            logging.error("-_- Sleep -_-")
             try_count += 1
             continue
     c = result.content
@@ -91,7 +100,7 @@ def get_article_detail_haberturk(post_url):
     except:
         error_urls.append(url)
         error_flag = 1
-        traceback.print_exc()
+        logging.error("Exception ", exc_info=1)
     return article_text, error_flag
 
 
@@ -104,7 +113,7 @@ def get_article_detail_sabah(post_url):
             result = requests.get(url)
         except:
             skipped_urls.append(url)
-            traceback.print_exc()
+            logging.error("Exception ", exc_info=1)
             return
 
         error_flag = 0
@@ -131,7 +140,8 @@ def get_article_detail_sabah(post_url):
             print(article_text)
         except:
             error_flag = 1
-            traceback.print_exc()
+            logging.error("Exception ", exc_info=1)
+
         title = soup.find("meta", {"itemprop": "name"})['content'].text
         date = soup.find("meta", {"itemprop": "dateModified"})['content'].text
         date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
