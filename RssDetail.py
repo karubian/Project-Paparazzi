@@ -4,13 +4,13 @@ from bs4 import BeautifulSoup
 import datetime
 import time
 import json
-import traceback
+import pymongo
 import logging
 import sys
-# uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
-# client = pymongo.MongoClient(uri)
-# db = client.get_database('paparazzi')
-# print(db.kelebek_all.count())
+
+uri = 'mongodb://127.0.0.1:27017/paparazzi'
+client = pymongo.MongoClient(uri)
+db = client.get_database('paparazzi')
 
 news_path = "/kelebek/magazin/"
 
@@ -96,18 +96,19 @@ def get_article_detail_haberturk(post_url):
                 "title": title,
                 "text": body
             }
-            print(res["text"])
+
     except:
         error_urls.append(url)
-        error_flag = 1
         logging.error("Exception ", exc_info=1)
-    return article_text, error_flag
+    return article_text
 
 
 def get_article_detail_sabah(post_url):
     url = post_url
     article_text = ''
-    while True:
+    res = ""
+    has_next_page = True
+    while has_next_page:
         result = ''
         try:
             result = requests.get(url)
@@ -118,57 +119,81 @@ def get_article_detail_sabah(post_url):
 
         error_flag = 0
         soup = BeautifulSoup(result.content, "html.parser")
-        try:
-            article = soup.find("div", {"class": "newsBox"}).find_all('p')
-            for element in article:
-                article_text = article_text + '\n' + ''.join(element.find_all(text=True))
 
+        article_type = soup.find("meta",{"name":"tagContentType"})["content"]
+        if article_type == "haber":
+            article_type = "article"
+            date = soup.find("meta", {"itemprop": "dateModified"})['content']
+            date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
             try:
-                next_page = soup.find("li", {"class": "next"}).find("a")["href"]
+                article = soup.find("div", {"class": "newsBox"}).find_all('p')
+                for element in article:
+                    article_text = article_text + '\n' + ''.join(element.find_all(text=True))
+
+                try:
+                    next_page = soup.find("li", {"class": "next"}).find("a")["href"]
+                except:
+                    has_next_page = False
+
+                if (has_next_page):
+                    splitted_url = url.split("=")
+                    if len(url.split("?")) > 1:
+                        splitted_url[-1] = str(next_page).split("=")[-1]
+                        url = "=".join(splitted_url)
+                    else:
+                        url += next_page
             except:
-                break
+                logging.error("Exception ", exc_info=1)
 
-            splitted_url = url.split("=")
-            if len(url.split("?")) > 1:
-                splitted_url[-1] = str(next_page).split("=")[-1]
+            localId = soup.find("input",{"name":"ArticleId"})["value"]
+            keywords = soup.find("meta",{"name":"news_keywords"})["content"]
+            if soup.find("figure", {"class": "newsImage"}) == None:
+                media = ""
             else:
-                url += next_page
+                media = soup.find("figure", {"class": "newsImage"}).img["src"]
 
-            url = "=".join(splitted_url)
-            print(url)
 
-            print(article_text)
-        except:
-            error_flag = 1
-            logging.error("Exception ", exc_info=1)
+        else:
+            article_type = "gallery"
+            date_text = soup.find("div",{"name","textInfo"}).find_all("span")[-1].text
+            date_part = date_text.split("\r\n")
+            date_text_day = date_part[1].split(":")[1].strip()
+            date_text_time = date_part[2].strip()
+            date = date_text_day + "T" +  date_text_time
+            date = datetime.datetime.strptime(date, "%d.%m.%YT%H:%M")
+            json_string = soup.find_all("script",{"type":"text/javascript"})[5].text
+            localId = json_string[json_string.find("?haber")-36:json_string.find("?haber")]
+            keywords = soup.find("meta",{"itemprop":"keywords"})["content"]
+            text_elements = soup.find_all("figcaption")
+            for item in text_elements:
+                article_text = article_text + item.text
+            has_next_page = False
+            media = soup.find("meta",{"itemprop":"thumbnailUrl"})["content"]
 
-        title = soup.find("meta", {"itemprop": "name"})['content'].text
-        date = soup.find("meta", {"itemprop": "dateModified"})['content'].text
-        date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
-        media = soup.find("div", {"class": "news-detail-featured-img"})
+        title = soup.find("meta", {"itemprop": "name"})['content']
+
         # for item in soup.find_all("div", {"class": "photo-news-list-img"}):
         #     media_array.append(item.img["data-img-src"])
 
-        #TODODOODODODODODODODO
-        content_type = "article"
-        description = article_json["description"]
-        body = article_json["articleBody"]
+        description = soup.find("meta",{"name":"Description"})["content"]
         res = {
-            "localId": news_id,
+            "localId": localId,
             "date": date,
-            "source": "habertürk",
-            "contentType": content_type,
+            "source": "sabah",
+            "contentType": article_type,
             "url": post_url,
             "hash": "",
             "description": description,
             "location": "",
             "famousName": [],
-            "tags": keywords,
-            "media": "" if media is None else media.img["src"],
+            "tags": keywords.split(","),
+            "media": media,
             "title": title,
-            "text": body
+            "text": article_text
         }
-    return article_text, error_flag
+    logging.error(res)
+    rssDetail = db["rssDetail"]
+    rssDetail.insert_one(res)
+    return article_text
 
 
-#get_article_detail_sabah("https://www.sabah.com.tr/magazin/2017/11/21/tuvana-turkay-ile-fenerbahceli-futbolcu-alper-potukun-ayrildigi-iddia-edildi?paging=1")
