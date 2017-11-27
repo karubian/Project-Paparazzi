@@ -3,12 +3,12 @@ import http.client
 import pymongo
 import json
 import datetime
+import logging
+import sys
 
-uri = 'mongodb://BerkSefkatli:berk1996@ds159254.mlab.com:59254/paparazzi'
+uri = 'mongodb://localhost:27017/paparazzi'
 client = pymongo.MongoClient(uri)
 db = client.get_database('paparazzi')
-
-conn = http.client.HTTPSConnection("api.hurriyet.com.tr")
 
 headers = {
     'accept': "application/json",
@@ -17,34 +17,40 @@ headers = {
 
 paths = ["/kelebek/gurme/",
 "/kelebek/hayat/",
-         # hayat not finished
-"/kelebek/blog/hilal-meric/",
-"/kelebek/hurriyet-cumartesi/",
-"/kelebek/hurriyet-pazar/",
-"/son-dakika-haberleri/kelebek/",
-"/kelebek/keyif/",
-         # keyif not finished 6250
 "/kelebek/magazin/",
 "/kelebek/blog/pinar-oznur/",
 "/kelebek/televizyon/"]
 
-#
+
+
+logging.basicConfig(
+        format="%(asctime)s [%(threadName)-8.8s]  %(message)s",
+        handlers=[
+            logging.FileHandler("{0}/{1}.log".format(".", "hurriyetGallery")),
+            logging.StreamHandler(sys.stdout)
+        ])
+
 for path in paths:
     for x in range(0,1000000,50):
-        print("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
-        conn.request("GET", "/v1/newsphotogalleries?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
+        logging.error("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
+        keep_trying = True
+        res = None
+        while (keep_trying):
+            try:
+                conn = http.client.HTTPSConnection("api.hurriyet.com.tr")
+                conn.request("GET", "/v1/newsphotogalleries?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
                      headers=headers)
-        res = conn.getresponse()
+                res = conn.getresponse()
+                if res.getcode() != 200:
+                    raise Exception("Response code not 200")
+                keep_trying = False
+            except:
+                logging.error("Exception ", exc_info=1)
+                keep_trying = True
 
-        while(res.getcode() != 200):
-            print(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
-            conn.request("GET", "/v1/newsphotogalleries?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
-                         headers=headers)
-            res = conn.getresponse()
-
-        data = json.loads(res.read())
+        data = json.loads(res.read().decode())
         if(len(data) == 0):
-            print("No more galleries in path : '" + path + "'")
+            logging.error("No more galleries in path : '" + path + "'")
             break
 
         for gallery in data:
@@ -89,28 +95,12 @@ for path in paths:
             # Because the date formats differ from one article to another we have to check both formats
 
 
-        news = db['news']
+        news = db['raw_articles']
         try:
-            print(data)
-            #news.insert_many(data)
+            news.insert_many(data)
         except pymongo.errors.BulkWriteError as bwe:
             # Incase of duplicate errors.
-            print(bwe.details)
-
-
-
-
-# For getting all the paths as text.
-# for x in range(0,2100,50):
-#     print("Requesting page : " + x.__str__())
-#     conn.request("GET", "/v1/paths?$top=50&%24skip=" + x.__str__(), headers=headers)
-#     res = conn.getresponse()
-#     while(res.getcode() != 200):
-#         print(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
-#         conn.request("GET", "/v1/paths?$top=50&%24skip=" + x.__str__(), headers=headers)
-#         res = conn.getresponse()
-#     data = json.loads(res.read())
-#     print(data)
-
+            logging.error(bwe.details)
+logging.error("Extracting all galleries in Hurriyet API ended successfully.")
 client.close()
 

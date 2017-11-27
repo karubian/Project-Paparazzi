@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 import feedparser
 import threading
 import time
@@ -6,7 +7,7 @@ import traceback
 import RssDetail
 import json
 import logging
-import sys
+
 
 thread_pool = []
 sabah = "https://www.sabah.com.tr/rss/anasayfa.xml"
@@ -16,6 +17,12 @@ anadoluajans = "http://aa.com.tr/tr/rss/default?cat=guncel"
 # hurriyet = "https://www.hurriyet.com.tr/rss/magazin"
 # hürriyet eski haberleri veriyor rssi düzgün değil
 
+logging.basicConfig(
+        format="%(asctime)s [%(threadName)-8.8s]  %(message)s",
+        handlers=[
+            logging.FileHandler("{0}/{1}.log".format(".", "rss")),
+            logging.StreamHandler(sys.stdout)
+        ])
 
 def get_rss(rss_url):
     try:
@@ -41,13 +48,10 @@ def get_rss(rss_url):
                 for j in range(i):
                     # write the new articles to the database here
                     if(rss_url.startswith("http://www.haberturk.com")):
-                        logging.error(sorted_new_rss_array[j]['link'])
                         RssDetail.get_article_detail_haberturk(sorted_new_rss_array[j]['link'])
                     elif(rss_url.startswith("https://www.sabah.com.tr")):
-                        logging.error(sorted_new_rss_array[j]['link'])
-                        #RssDetail.get_article_detail_haberturk(sorted_new_rss_array[j]['link'])
-                    elif (rss_url.startswith("http://aa.com.tr")):
-                        logging.error(sorted_new_rss_array[j]['link'])
+                        RssDetail.get_article_detail_sabah(sorted_new_rss_array[j]['link'])
+                    #elif (rss_url.startswith("http://aa.com.tr")):
                         #RssDetail.get_article_detail_haberturk(sorted_new_rss_array[j]['link'])
                     logging.error(sorted_new_rss_array[j]['link'])
                 sorted_old_rss_array = sorted_new_rss_array
@@ -64,33 +68,14 @@ def get_rss(rss_url):
 
 
 try:
-    # logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
-    # rootLogger = logging.getLogger()
-    #
-    # fileHandler = logging.FileHandler("{0}/{1}.log".format(".", "logtest"))
-    # fileHandler.setFormatter(logFormatter)
-    # rootLogger.addHandler(fileHandler)
-    #
-    #
-    # consoleHandler = logging.StreamHandler(sys.stdout)
-    # consoleHandler.setFormatter(logFormatter)
-    # rootLogger.addHandler(consoleHandler)
-
-    logging.basicConfig(
-        format="%(asctime)s [%(threadName)-8.8s]  %(message)s",
-        handlers=[
-            logging.FileHandler("{0}/{1}.log".format(".", "rss")),
-            logging.StreamHandler(sys.stdout)
-        ])
-    logging.error("denemee")
     thread_pool.append(threading.Thread(target=get_rss, args=(sabah,)))
     thread_pool.append(threading.Thread(target=get_rss, args=(sabah2,)))
     thread_pool.append(threading.Thread(target=get_rss, args=(haberturk,)))
     thread_pool.append(threading.Thread(target=get_rss, args=(anadoluajans,)))
 
 except:
-    print("Creating threads failed.")
     logging.getLogger().error("Exception ", exc_info=1)
+    sys.exit(1)
 
 for elem in thread_pool:
     elem.start()

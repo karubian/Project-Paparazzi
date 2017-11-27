@@ -47,8 +47,6 @@ uri = 'mongodb://localhost:27017/paparazzi'
 client = pymongo.MongoClient(uri)
 db = client.get_database('paparazzi')
 
-conn = http.client.HTTPSConnection("api.hurriyet.com.tr")
-
 headers = {
     'accept': "application/json",
     'apikey': "4c67720b046a4743aba6979181505cef"
@@ -92,21 +90,19 @@ for path in paths:
     for x in range(0,99999,50):
         logging.error("Requesting results starting at : " + x.__str__() + " from path : '" + path + "'")
         keep_trying = True
+        res = None
         while (keep_trying):
             try:
+                conn = http.client.HTTPSConnection("api.hurriyet.com.tr")
                 conn.request("GET", "/v1/articles?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
                              headers=headers)
                 res = conn.getresponse()
+                if res.getcode() != 200:
+                    raise Exception("Response code not 200")
                 keep_trying = False
             except:
                 logging.error("Exception ", exc_info=1)
                 keep_trying = True
-
-        while(res.getcode() != 200):
-            logging.error(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
-            conn.request("GET", "/v1/articles?$filter=Path%20eq%20'" + path + "'&$top=50&%24skip=" + x.__str__(),
-                         headers=headers)
-            res = conn.getresponse()
 
         data = json.loads(res.read().decode())
         if(len(data) == 0):
@@ -152,21 +148,5 @@ for path in paths:
         news.insert_many(data)
 
         client.close()
-
-
-
-
-# For getting all the paths as text.
-# for x in range(0,2100,50):
-#     logging.error("Requesting page : " + x.__str__())
-#     conn.request("GET", "/v1/paths?$top=50&%24skip=" + x.__str__(), headers=headers)
-#     res = conn.getresponse()
-#     while(res.getcode() != 200):
-#         logging.error(res.getcode().__str__() + " fail " + res.read().decode('utf-8'))
-#         conn.request("GET", "/v1/paths?$top=50&%24skip=" + x.__str__(), headers=headers)
-#         res = conn.getresponse()
-#     data = json.loads(res.read())
-#     logging.error(data)
-
 
 
