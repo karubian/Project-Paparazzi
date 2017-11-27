@@ -96,10 +96,13 @@ def get_article_detail_haberturk(post_url):
                 "title": title,
                 "text": body
             }
-
+            logging.error(res)
+            rssDetail = db["rssDetail"]
+            rssDetail.insert_one(res)
     except:
         error_urls.append(url)
         logging.error("Exception ", exc_info=1)
+
     return article_text
 
 
