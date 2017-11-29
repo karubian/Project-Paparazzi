@@ -17,17 +17,14 @@ news_path = "/kelebek/magazin/"
 error_urls = []
 skipped_urls = []
 
-
-################# HABERTURK ####################################################################
-
-def get_article_detail_haberturk(post_url):
-    logging.basicConfig(
+logging.basicConfig(
         format="%(asctime)s [%(threadName)-8.8s]  %(message)s",
         handlers=[
             logging.FileHandler("{0}/{1}.log".format(".", "rssDetail")),
             logging.StreamHandler(sys.stdout)
         ])
 
+def get_article_detail_haberturk(post_url):
     url = post_url
     result = ''
     article_text = ''
@@ -118,25 +115,27 @@ def get_article_detail_sabah(post_url):
         except:
             skipped_urls.append(url)
             logging.error("Exception ", exc_info=1)
+            logging.error("Exception occured on link : " + url)
             return
 
         error_flag = 0
-        soup = BeautifulSoup(result.content, "html.parser")
-
-        article_type = soup.find("meta",{"name":"tagContentType"})["content"]
-        if article_type == "haber":
-            article_type = "article"
-            date = soup.find("meta", {"itemprop": "dateModified"})['content']
-            date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
-            try:
+        try:
+            soup = BeautifulSoup(result.content, "html.parser")
+            article_type = soup.find("meta",{"name":"tagContentType"})["content"]
+            if article_type == "haber":
+                article_type = "article"
+                date = soup.find("meta", {"itemprop": "dateModified"})['content']
+                date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
+                
                 article = soup.find("div", {"class": "newsBox"}).find_all('p')
                 for element in article:
                     article_text = article_text + '\n' + ''.join(element.find_all(text=True))
 
-                try:
-                    next_page = soup.find("li", {"class": "next"}).find("a")["href"]
-                except:
+                next_page = soup.find("li", {"class": "next"})
+                if next_page is None:
                     has_next_page = False
+                else:
+                    next_page = soup.find("li", {"class": "next"}).find("a")["href"]
 
                 if (has_next_page):
                     splitted_url = url.split("=")
@@ -145,58 +144,59 @@ def get_article_detail_sabah(post_url):
                         url = "=".join(splitted_url)
                     else:
                         url += next_page
-            except:
-                logging.error("Exception ", exc_info=1)
+            
+                localId = soup.find("input",{"name":"ArticleId"})["value"]
+                keywords = soup.find("meta",{"name":"news_keywords"})["content"]
+                if soup.find("figure", {"class": "newsImage"}) == None:
+                    media = ""
+                else:
+                    media = soup.find("figure", {"class": "newsImage"}).img["src"]
 
-            localId = soup.find("input",{"name":"ArticleId"})["value"]
-            keywords = soup.find("meta",{"name":"news_keywords"})["content"]
-            if soup.find("figure", {"class": "newsImage"}) == None:
-                media = ""
+
             else:
-                media = soup.find("figure", {"class": "newsImage"}).img["src"]
+                article_type = "gallery"
+                date_text = soup.find("div",{"name","textInfo"}).find_all("span")[-1].text
+                date_part = date_text.split("\r\n")
+                date_text_day = date_part[1].split(":")[1].strip()
+                date_text_time = date_part[2].strip()
+                date = date_text_day + "T" +  date_text_time
+                date = datetime.datetime.strptime(date, "%d.%m.%YT%H:%M")
+                json_string = soup.find_all("script",{"type":"text/javascript"})[5].text
+                localId = json_string[json_string.find("?haber")-36:json_string.find("?haber")]
+                keywords = soup.find("meta",{"itemprop":"keywords"})["content"]
+                text_elements = soup.find_all("figcaption")
+                for item in text_elements:
+                    article_text = article_text + item.text
+                has_next_page = False
+                media = soup.find("meta",{"itemprop":"thumbnailUrl"})["content"]
+        
 
+            title = soup.find("meta", {"itemprop": "name"})['content']
 
-        else:
-            article_type = "gallery"
-            date_text = soup.find("div",{"name","textInfo"}).find_all("span")[-1].text
-            date_part = date_text.split("\r\n")
-            date_text_day = date_part[1].split(":")[1].strip()
-            date_text_time = date_part[2].strip()
-            date = date_text_day + "T" +  date_text_time
-            date = datetime.datetime.strptime(date, "%d.%m.%YT%H:%M")
-            json_string = soup.find_all("script",{"type":"text/javascript"})[5].text
-            localId = json_string[json_string.find("?haber")-36:json_string.find("?haber")]
-            keywords = soup.find("meta",{"itemprop":"keywords"})["content"]
-            text_elements = soup.find_all("figcaption")
-            for item in text_elements:
-                article_text = article_text + item.text
-            has_next_page = False
-            media = soup.find("meta",{"itemprop":"thumbnailUrl"})["content"]
+            # for item in soup.find_all("div", {"class": "photo-news-list-img"}):
+            #     media_array.append(item.img["data-img-src"])
 
-        title = soup.find("meta", {"itemprop": "name"})['content']
-
-        # for item in soup.find_all("div", {"class": "photo-news-list-img"}):
-        #     media_array.append(item.img["data-img-src"])
-
-        description = soup.find("meta",{"name":"Description"})["content"]
-        res = {
-            "localId": localId,
-            "date": date,
-            "source": "sabah",
-            "contentType": article_type,
-            "url": post_url,
-            "hash": "",
-            "description": description,
-            "location": "",
-            "famousName": [],
-            "tags": keywords.split(","),
-            "media": media,
-            "title": title,
-            "text": article_text
-        }
+            description = soup.find("meta",{"name":"Description"})["content"]
+            res = {
+                "localId": localId,
+                "date": date,
+                "source": "sabah",
+                "contentType": article_type,
+                "url": post_url,
+                "hash": "",
+                "description": description,
+                "location": "",
+                "famousName": [],
+                "tags": keywords.split(","),
+                "media": media,
+                "title": title,
+                "text": article_text
+            }
+        except:
+            logging.error("Exception ", exc_info=1)
+            logging.error("Exception occured on link : " + url)
     logging.error(res)
     rssDetail = db["rssDetail"]
     rssDetail.insert_one(res)
     return article_text
-
 
