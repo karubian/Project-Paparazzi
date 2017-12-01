@@ -9,7 +9,7 @@ driver.get("http://www.milliyet.com.tr/magazin/")
 searchButton = driver.find_element_by_class_name('srch')
 searchButton.click()
 searchBox = driver.find_element_by_id('inpSearchKeywordtop')
-celebrity_name="Şeyma Subaşı"
+celebrity_name="tarkan"
 searchBox.send_keys(celebrity_name)
 searchBox.send_keys(Keys.RETURN)
 assert "Nothing found" not in driver.page_source
@@ -17,9 +17,8 @@ error_urls = []
 list_link = []
 encoding = 'utf-8'
 articleFile = open('article.txt', 'w', encoding=encoding)
-
-list_page = driver.find_elements_by_xpath("//div[contains(@class,'pager')]/ul/li/a[@href]")
-for page in list_page:
+page_flag = 1
+while page_flag==1:
     list_html = driver.find_elements_by_xpath("//div[contains(@class,'row')]/ul/li/a[@href]")
     for item in list_html:
         link = item.get_attribute("href")
@@ -31,9 +30,8 @@ for page in list_page:
         elem.click()
     except:
         print("ileri yok")
+        page_flag = 0
         break
-
-print(len(list_link))
 
 
 def get_article_detail(post_info):
