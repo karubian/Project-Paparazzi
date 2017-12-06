@@ -33,15 +33,15 @@ def get_links():
             if str(anchor_link)[0:4] == "http":
                 post_link = anchor_link
             else:
-                print(anchor_link)
                 post_link = base_url + anchor_link
             post_title = page_links.contents[0]
 
-            print(post_link)
             #html'den tagCategory'den de kontrol edebilirmisim.
             try:
                 category = urlparse(post_link)[2].split('/')[1]
-                if not (category == 'gunaydin' or category == 'Gunaydin'):
+                if category == "Magazin":
+                    print(post_link)
+
                     urls.append(post_link)
             except:
                 continue

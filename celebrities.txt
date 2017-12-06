@@ -2,10 +2,7 @@ Abdullah Pabur
 Abdürrahim Karakoç
 Abdurrahman Kızılay
 Abdurrahman Önül
-Abidin
-Acil Servis
 Adnan Şenses
-Af
 Ahmet Aslan
 Ahmet Kaya
 Ahmet Özhan
@@ -13,7 +10,7 @@ Ahmet Selçuk İlkan
 Ahmet Şafak
 Ajda Pekkan
 Akın
-Alex
+Alex De Souza
 Ali Güven
 Alişan
 Alihan
@@ -25,7 +22,6 @@ Ankaralı Yasemin
 Arap Şükrü
 Arif Sağ
 Asena
-Aslı
 Aslı Güngör
 Aslı Hünel
 Asuman Krause
@@ -36,7 +32,6 @@ Atilla İlhan
 Atilla Taş
 Atiye Deniz
 Ayben
-Ayça
 Aydilge
 Aylin Alaz
 Aylin Aslım
@@ -60,7 +55,6 @@ Berksan
 Bertuğ Cemil
 Betül Demir
 Beyza Durmaz
-Bomb
 Bulutsuzluk Özlemi
 Burak Kut
 Burcu Güneş
@@ -89,7 +83,6 @@ Deniz Seki
 Dilek Budak
 Direc-t
 DJ Akman
-Doğa
 Doğuş
 Duman
 Düş Sokağı Sakinleri
@@ -100,7 +93,6 @@ Ebru Yaşar
 Ece Anlı
 Eda Özülkü
 Edip Akbayram
-Ege
 Ege Çubukçu
 Ekrem Düzgünoğlu
 Elif Karlı
@@ -117,7 +109,6 @@ Erol Budan
 Erol Büyükburç
 Erol Evgin
 Esra Kahraman
-Etkin
 Eylem
 Ezginin Günlüğü
 Faruk K.
@@ -134,13 +125,11 @@ Ferhat Göçer
 Ferhat Tunç
 Feridun Düzağaç
 Fikret Kızılok
-Filiz
 Fuat Saka
 Fuchs
 Fulden Uras
 Funda Arar
 Gece Yolcuları
-Gitarcı
 Gizem Özdilli
 Gökçe Kırgız
 Gökhan Güney
@@ -149,7 +138,6 @@ Gökhan Özen
 Gökhan Tepe
 Gökhan Türkmen
 Göksel
-Göktan
 Gönül Yazar
 Gripin
 Grup As
@@ -165,13 +153,9 @@ Grup Yorum
 Grup Yol
 Güçlü Soydemir
 Gül Önen
-Gülay
 Gülben Ergen
 Gülden Karaböcek
-Güllü
 Gülşen
-Günce
-Günel
 Hadise
 Hakan Altun
 Hakan Gürses
@@ -179,14 +163,12 @@ Hakan Peker
 Hakan Taşıyan
 Hakan Yeşilyurt
 Hakkı Bulut
-Haktan
 Haluk Levent
 Hande Yener
 Haramiler
 Harika Avcı
 Harun Kolçak
 Hasan Yılmaz
-Hatice
 Hayko Cepkin
 Hilal Cebeci
 Hülya Avşar
@@ -204,14 +186,12 @@ Işın Karaca
 İlhan İrem
 İlhan Şeşen
 İntizar
-İrem
 İsmail Türüt
 İsmail YK
 İstanbul Attack
 İzel
 İzzet Altınmeşe
 İzzet Yıldızhan
-Kader
 Kamuran Akkor
 Kayahan
 Kazım Koyuncu
@@ -224,12 +204,9 @@ Kıraç
 Kıvırcık Ali
 Kibariye
 Kolera
-Kont Adnan
-Korhan
 Kubat
 Kutsi
-Küçük İbo
-Kürşat
+İdo Tatlıses
 Lara
 Latif Doğan
 Leman Sam
@@ -248,6 +225,8 @@ Metin Özülkü
 Metin Şentürk
 Meyra
 M.F.Ö
+MFÖ
+M.F.Ö.
 Mine Çayıroğlu
 Mine Koşan
 Mirkelam
@@ -271,17 +250,15 @@ Mustafa Yıldızdoğan
 Müslüm Gürses
 Müzeyyen Senar
 Nadide Sultan
-Nalan
 Naşide Göktürk
 Nazan Öncel
 Nedim Zeper
 Nejat Alp
-Neslihan
+Neslihan Atagül
 Neşe Karaböcek
 Neşet Ertaş
 Nev
 Nez
-Nihan
 Nihat Doğan
 Nil Karaibrahimgil
 Nilgül
@@ -302,6 +279,8 @@ Orhan Ölmez
 Osman Öztunç
 Ömer Danış
 Öykü-Berk
+Öykü & Berk
+Öykü ve Berk
 Özcan Deniz
 Özgün
 Özlem Tekin
@@ -313,8 +292,6 @@ Pinhani
 Pin-Up
 Rafet El Roman
 Ragga Oktay
-Reflex
-Reha
 Reyhan Karaca
 Rober Hatemo
 Sabahat Akkiraz
@@ -345,10 +322,7 @@ Tanju Okan
 Tarık
 Tarık Mengüç
 Tarkan
-Tayfun
-Taylan
 Teoman
-Terapi
 Toygar Işıklı
 Tuğba Ekinci
 Tuğba Özay
@@ -911,11 +885,11 @@ Mehmet Akan
 Mehmet Ali Erbil
 Mehmet Ali Kaptanlar
 Mehmet Ali Nuroğlu
-Mehmet Aslan (oyuncu)
+Mehmet Aslan
 Mehmet Aslantuğ
 Mehmet Atay
 Mehmet Birkiye
-Mehmet Güler (Bursa doğumlu)
+Mehmet Güler
 Mehmet Gürhan
 Mehmet Keskinoğlu
 Mehmet Ulay
@@ -1870,7 +1844,6 @@ Nergis Öztürk
 Neriman Uğur
 Neslihan Acar
 Neslihan Aker
-Neslihan Atagül
 Neslihan Yeldan
 Nesrin Akkoç
 Nesrin Cavadzade
@@ -2165,6 +2138,7 @@ Yeliz Şar
 Şennur Nogaylar
 Şerif Sezer
 Şeyla Halis
+Şeyma Subaşı
 Çağla Şıkel
 Abdullah Yüce
 Numan Acar
@@ -3036,7 +3010,7 @@ Talat Dumanlı
 Tamer Güler
 Tamer Karadağlı
 Tamer Levent
-Tamer Yiğit (1974 doğumlu oyuncu)
+Tamer Yiğit
 Tamer Özceviz
 Taner Barlas
 Taner Birsel
@@ -3168,14 +3142,14 @@ Yılmaz Duru
 Yılmaz Erdoğan
 Cem Yılmaz
 Yiğit Özşener
-Tamer Yiğit (1942 doğumlu oyuncu)
+Tamer Yiğit
 Yosi Mizrahi
 Yunus Bülbül
 Yunus Emre Yıldırımer
 Yunus Günçe
 Yurdaer Okur
 Yusuf Sezgin
-Yusuf Çetin (sanatçı)
+Yusuf Çetin
 Yücel Erten
 Uğur Yücel
 Yüksel Arıcı
@@ -3186,7 +3160,7 @@ Zafer Önen
 Zekai Müftüoğlu
 Zeki Demirkubuz
 Zeki Göker
-Zeki Sezer (oyuncu)
+Zeki Sezer
 Zeki Tüney
 Zeki Yurtbaşı
 Zihni Göktay

@@ -1,4 +1,5 @@
 Abdullah Pabur
+Acun Ilıcalı
 Abdürrahim Karakoç
 Abdurrahman Kızılay
 Abdurrahman Önül
@@ -115,7 +116,7 @@ Faruk K.
 Fatih Erkoç
 Fatih Kısaparmak
 Fatih Ürek
-Fatih Yeşilgül (Yeşilyurt)
+Fatih Yeşilgül
 Fedon
 Ferda Anıl Yarkın
 Ferdi Gürses
@@ -319,7 +320,6 @@ Sümer Ezgü
 Şevval Sam
 Tan Taşçı
 Tanju Okan
-Tarık
 Tarık Mengüç
 Tarkan
 Teoman
@@ -446,7 +446,7 @@ Avni Yalçın
 Aybars Kartal Özson
 Ayberk Atilla
 Ayberk Pekcan
-Aydın (şarkıcı)
+Aydın
 Aydın Babaoğlu
 Aydın Tolan
 Ayhan Kavas
@@ -472,7 +472,7 @@ Batuhan Karacakaya
 Baykal Kent
 Baykal Saran
 Behzat Uygur
-Bekir Aksoy (oyuncu)
+Bekir Aksoy
 Berat Yenilmez
 Berk Cankat
 Berk Hakman
@@ -642,7 +642,7 @@ Erdal Özyağcılar
 Erdem Baş
 Erdem Ergüney
 Erdem Yener
-Erdinç Dinçer (oyuncu)
+Erdinç Dinçer
 Erdinç Gülener
 Erdoğan Akduman
 Erdoğan Dikmen
@@ -669,7 +669,7 @@ Erol Babaoğlu
 Erol Durak
 Erol Günaydın
 Erol Kardeseci
-Erol Keskin (oyuncu)
+Erol Keskin
 Erol Taş
 Erol Tezeren
 Erol Çolak
@@ -693,7 +693,7 @@ Fatih Koyunoğlu
 Ferdi Akarnur
 Ferdi Atuner
 Ferdi Merter
-Ferdi Tayfur (müzisyen)
+Ferdi Tayfur
 Ferit Aktuğ
 Ferit Kaya
 Fethi Kantarcı
@@ -725,7 +725,7 @@ Engin Günaydın
 Gündüz Sezgin
 Güngör Erbayık
 Güngör Gün
-Mehmet Günsür (oyuncu)
+Mehmet Günsür
 Gürbey İleri
 Gürdal Tosun
 Gürkan Uygun
@@ -764,7 +764,7 @@ Hasan Yalnızoğlu
 Hayati Çitaklar
 Haydar Zorlu
 Hayrullah Evrenöz
-Hazım Körmükçü (oyuncu, 1965)
+Hazım Körmükçü
 Hidayet Erdinç
 Hikmet Karagöz
 Hilmi Cem İntepe
@@ -787,7 +787,7 @@ Kadir Çermik
 Kadir Çöpdemir
 Kadir İnanır
 Kamran Usluer
-Kamufle (müzisyen)
+Kamufle
 Kanbolat Görkem Arslan
 Ümit Kantarcılar
 Nihat Kantemir
@@ -878,7 +878,7 @@ Mehmet Ulay
 Mehmet Usta
 Mehmet Âkif Alakurt
 Mehmet Çepiç
-Mehmet Çevik (oyuncu)
+Mehmet Çevik
 Mehmet Özgür
 Mehmetcan Mincinozlu
 Ahmet Mekin
@@ -900,7 +900,7 @@ Metin Akpınar
 Metin Belgin
 Metin Coşkun
 Metin Yıldırım
-Metin Yıldız (oyuncu)
+Metin Yıldız
 Metin Çekmez
 Metin Çeliker
 Mevlüt Demiryay
@@ -921,7 +921,7 @@ Murat Kılıç
 Murat Prosçiler
 Murat Soydan
 Murat Taşkent
-Murat Yıldırım (oyuncu)
+Murat Yıldırım
 Murat Çidamlı
 Murat Ünalmış
 Musa Uzunlar
@@ -930,7 +930,7 @@ Mustafa Altıoklar
 Mustafa Suphi Baltacı
 Mustafa Turan
 Mustafa Uğurlu
-Mustafa Üstündağ (oyuncu)
+Mustafa Üstündağ
 Mutlu Güney
 Mücap Ofluoğlu
 Müfit Kayacan
@@ -949,8 +949,8 @@ Necdet Yakın
 Necip Memili
 Necmettin Çobanoğlu
 Necmi Yapıcı
-Neco (şarkıcı)
-Nedim Doğan (oyuncu)
+Neco
+Nedim Doğan
 Nedret Özbek
 Nejat Birecik
 Nejat Uygur
@@ -985,8 +985,8 @@ Onur Saylak
 Onur Tuna
 Onur Ünsal
 Orhan Alkaya
-Orhan Aydın (1947 doğumlu oyuncu)
-Orhan Aydın (1961 doğumlu oyuncu)
+Orhan Aydın
+Orhan Aydın
 Orhan Edip Ertürk
 Orhan Erçin
 Orhan Kılıç
@@ -1065,7 +1065,7 @@ Sefa Doğanay
 Sefa Tantoğlu
 Sefa Zengin
 Selahattin Taşdöğen
-Selim Bayraktar (oyuncu)
+Selim Bayraktar
 Selim Erdoğan
 Selim Gülgören
 Selim Gürata
@@ -1171,7 +1171,7 @@ Tuğrul Çetiner
 Eray Türk
 Türker Tekin
 Ufuk Bayraktar
-Ufuk Özkan (oyuncu)
+Ufuk Özkan
 Ulaş Tuna Astepe
 Selçuk Uluergüven
 Ulvî Alacakaptan
@@ -1245,7 +1245,7 @@ Yüksel Arıcı
 Zafer Algöz
 Zafer Önen
 Zekai Müftüoğlu
-Zeki Sezer (oyuncu)
+Zeki Sezer
 Zihni Göktay
 Zihni Küçümen
 Ziya Kürküt
@@ -1261,7 +1261,7 @@ Yunus Çakıroğlu
 Çetin Tekindor
 Çetin İpekkaya
 Candaş Çetinkaya
-Ömer Duran (oyuncu)
+Ömer Duran
 Ömür Arpacı
 Önder Açıkalın
 Önder Açıkbaş
@@ -1304,7 +1304,7 @@ Beyazıt Öztürk
 İnanç Ömer Benlioğlu
 İrfan Kangı
 İsmail Baki Tuncer
-İsmail Demirci (oyuncu)
+İsmail Demirci
 İsmail Düvenci
 İsmail Ege Şaşmaz
 İsmail Erol
@@ -1650,7 +1650,7 @@ Ayten Gökçer
 Gonca Vuslateri
 Goncagül Sunar
 Aslıhan Güner
-Ayşegül Günay (oyuncu)
+Ayşegül Günay
 Gökçe Akyıldız
 Gökçe Bahadır
 Gökçe Yanardağ
@@ -1725,9 +1725,11 @@ Ayla Karaca
 Suzan Kardeş
 Hazal Kaya
 Aysun Kayacı
-Kendi
 Yasemin Kozanoğlu
 Kübra Kip
+Gökhan Özoğuz
+Hakan Özoğuz
+Berkay Şahin
 Lale Başar
 Lale Yavaş
 Latife Saruhan
@@ -1861,6 +1863,7 @@ Pınar Öğün
 Pıtırcık Akerman
 Rojda Demirer
 Ruhsar Öcal
+Yasemin Yalçın
 Rüçhan Çalışkur
 Saadet Gürses
 Saadet Işıl Aksoy
@@ -2095,14 +2098,14 @@ Agah Hün
 Ahmet Arıman
 Ahmet Danyal Topatan
 Ahmet Fehim
-Ahmet Gülhan (sanatçı)
+Ahmet Gülhan
 Ahmet Kayakesen
 Ahmet Kostarika
 Ahmet Levendoğlu
 Ahmet Sezerel
 Ahmet Tarık Tekçe
 Ahmet Üstel
-Ahmet Üstün (oyuncu)
+Ahmet Üstün
 Akil Öztuna
 Ali Avaz
 Ali Berktay
@@ -2225,7 +2228,7 @@ Kudret Karadağ
 Kunt Tulgar
 Tuncel Kurtiz
 Kâmran Yüce
-Hazım Körmükçü (oyuncu, 1898)
+Hazım Körmükçü
 Levent Kazak
 Levent Tülek
 Macit Flordun
@@ -2233,12 +2236,12 @@ Macit Koper
 Mahir Özerdem
 Mahmut Moralı
 Murat Makar
-Mehmet Aslan (oyuncu)
+Mehmet Aslan
 Mehmet Atak
 Mehmet Avdan
 Mehmet Emin Toprak
-Mehmet Güler (Bursa doğumlu)
-Mehmet Ulusoy (yönetmen)
+Mehmet Güler
+Mehmet Ulusoy
 Melih Düzenli
 Memduh Ün
 Mert Ali Yavuzcan
@@ -2252,13 +2255,13 @@ Muhteşem Demirağ
 Muhteşem Durukan
 Murat Akkoyunlu
 Murat Serezli
-Mustafa Arslan (oyuncu)
+Mustafa Arslan
 Mustafa Kırantepe
 Muzaffer Hepgüler
 Muzaffer Tema
 Mümtaz Ener
 Nazmi Kırık
-Naşit Özcan (oyuncu)
+Naşit Özcan
 Necati Bilgiç
 Necdet Mahfi Ayral
 Necdet Tosun
@@ -2333,7 +2336,7 @@ Tarık Akan
 Tarık Tarcan
 Tekin Akmansoy
 Temel Gürsu
-Teoman (şarkıcı)
+Teoman
 Teoman Kumbaracıbaşı
 Timuçin Caymaz
 Timuçin Esen
@@ -2356,7 +2359,7 @@ Vedat Örfi Bengü
 Volkan Öge
 Yadigar Ejder
 Yavuz Selekman
-Yavuz Özkan (sinemacı)
+Yavuz Özkan
 Yavuzer Çetinkaya
 Yıldıray Çınar
 Yıldırım Önal
@@ -2382,7 +2385,7 @@ Turgut Özatay
 Özcan Özgür
 Özdemir Han
 Ünal Yeter
-İbrahim Can (oyuncu)
+İbrahim Can
 İhsan Yüce
 İlyas İlbey
 İsmail Galip Arcan
@@ -2390,7 +2393,7 @@ Turgut Özatay
 Şahap Akalın
 Şahin Yenişehirlioğlu
 Şefik Döğen
-Ali Şen (oyuncu)
+Ali Şen
 Şükrü Özyıldız
 Adile Naşit
 Alev Baymur
@@ -2431,7 +2434,7 @@ Derya Baykal
 Devrim Yakut
 Zeynep Değirmencioğlu
 Diclehan Baban
-Dilber Ay (oyuncu)
+Dilber Ay
 Dilek Çelebi
 Dursune Şirin
 Ebru Ceylan
