@@ -27,15 +27,31 @@ def getCelebArray():
         celebrity_array = f.readlines()
     for i in range(len(celebrity_array)):
         celebrity_array[i] = celebrity_array[i].replace("\n","")
-    findCeleb(celebrity_array,data)
+    listFoundCelebs(celebrity_array,data)
 
-def findCeleb(celebrity_array,data):
+def listFoundCelebs(celebrity_array,data):
     for post in data["Text"]:
+        total_occurrences = 0
+        article_anchors = {}
         for item in celebrity_array:
-            occurence = post.count(item)
-            if occurence > 0:
-                print(str(occurence))
-                print(item)
+            occurrence = post.count(item)
+            total_occurrences = total_occurrences + occurrence
+            if occurrence > 0:
+                article_anchors[item] = occurrence
+                # print(str(occurrence))
+                # print(item)
+        print("Total occurrence of the post is " + str(total_occurrences))
+        for key in article_anchors:
+            print(key + " " + str(round(getNormalizedValue(total_occurrences,article_anchors[key]),2)))
 
+def getNormalizedValue(total_occurrences,occurrence):
+    return occurrence / total_occurrences
 
 getCelebArray()
+
+"""
+name :
+popularity : 234545.32
+locations : [ankara : 0.234, esenler: 123]
+
+"""
