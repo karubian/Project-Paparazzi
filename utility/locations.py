@@ -4,15 +4,7 @@ import codecs
 import pandas as pd
 import io
 
-# with open("TR.csv", 'rb') as csvfile:
-#     df = pd.read_csv(csvfile,encoding="utf-8",delimiter=";")
-# with codecs.open('TR.csv', encoding="iso 8859-9") as the_file:
-#     ad = the_file.readlines()
-
-# for i in range(len(tuples)):
-#   a, b = tuples[i]
-#   print(a,b)
-
+# Copy the contents of dirty_location.txt prior to running the code.
 a = pd.read_clipboard()
 print(a)
 
