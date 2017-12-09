@@ -1,0 +1,311 @@
+Abhazya
+Afganistan
+Almanya
+Andora
+Angola
+Antigua ve Barbuda
+Arjantin
+Arnavutluk
+Avustralya
+Avusturya
+Azerbaycan
+Bahamalar
+Bahreyn
+Bangladeþ
+Barbados
+Batý Sahra
+Belçika
+Belize
+Benin
+Beyaz
+Bhutan
+Birleþik Arap Emirlikleri
+Bolivya	Güney Amerika
+Bosna-Hersek
+Botsvana
+Brezilya
+Brunei
+Bulgaristan
+Burkina
+Burundi
+Cezayir
+Cibuti
+Çad
+Çek Cumhuriyeti
+Çin
+Daðlýk Karabað
+Danimarka
+Doðu Timor
+Dominik Cumhuriyeti
+Dominika
+Ekvador
+Ekvator Ginesi
+El Salvador
+Endonezya
+Eritre
+Ermenistan
+Estonya
+Etiyopya
+Fas
+Fiji
+Fildiþi Sahili
+Filipinler
+Filistin
+Finlandiya
+Fransa
+Gabon
+Gambiya
+Gana
+Gine
+Gine-Bissau
+Grenada
+Guyana
+Guatemala
+Güney Afrika Cumhuriyeti
+Güney Kore
+Güney Osetya
+Güney Suda
+Gürcistan
+Haiti Haiti
+Hýrvatistan
+Hindistan
+Hollanda
+Honduras
+Irak
+Birleþik Krallýk
+Ýran
+Ýrlanda
+Ýspanya
+Ýsrail
+Ýsveç
+Ýsviçre
+Ýtalya
+Ýzlanda
+Jamaika
+Japonya
+Kamboçya
+Kamerun
+Kanada
+Karadað
+Katar
+Kazakistan
+Kenya
+Kýrgýzistan
+Kýbrýs Cumhuriyeti
+Kiribati Kiribati
+Kolombiya Kolombiya
+Komorlar Komorlar
+Kongo Cumhuriyeti
+Demokratik Kongo Cumhuriyeti
+Kosova
+Kosta Rika Kostarika
+Kuveyt
+Kuzey Kýbrýs Türk Cumhuriyeti
+Kuzey Kore
+Küba Küba
+Laos
+Lesotho
+Letonya
+Liberya
+Libya
+Lihtenþtayn
+Litvanya
+Lübnan
+Lüksemburg
+Macaristan
+Madagaskar
+Makedonya
+Malavi
+Maldivler
+Malezya
+Mali
+Malta
+Marshall
+Meksika
+Mýsýr
+Mikronezya Federal Devletleri
+Moðolistan
+Moldova
+Monako
+Moritanya
+Mauritius
+Mozambik
+Myanmar
+Namibya
+Nauru
+Nepal
+Nikaragua
+Nijer
+Nijerya
+Norveç
+Orta Afrika Cumhuriyeti
+Özbekistan
+Pakistan
+Palau
+Panama
+Papua
+Paraguay
+Peru
+Polonya
+Portekiz
+Romanya
+Ruanda
+Rusya
+Saint
+Saint
+Saint
+Samoa
+San Marino
+Sealand
+Senegal
+Seyþeller
+Sýrbistan
+Sierra Leone
+Singapur
+Slovakya
+Slovenya
+Solomon Adalarý
+Somali
+Somaliland
+Sri Lanka
+Sudan
+Surinam
+Suriye
+Suudi Arabistan
+Svaziland
+Þil
+Tacikistan
+Tanzanya
+Tayland
+Tayvan
+Togo
+Tonga
+Transdinyester
+Trinidad
+Tunus
+Tuvalu
+Türkiye
+Türkmenistan
+Uganda
+Ukrayna
+Umman
+Uruguay
+Ürdün
+Vanuatu
+Vatikan
+Venezuela
+Vietnam
+Yemen
+Yeni Zelanda
+Yeþil Burun Adalarý
+Yunanistan
+Zambiya
+Zimbabve
+Almanya
+Berlin
+Avusturya
+Viyana
+Belçika
+Brüksel
+Birleþik Krallýk
+Londra
+Fransa
+Paris
+Hollanda
+Amsterdam
+Ýrlanda
+Dublin
+Ýsviçre
+Bern
+Lihtenþtayn
+Vaduz
+Lüksemburg
+Monako
+Beyaz Rusya
+Minsk
+Bulgaristan
+Sofya
+Çek Cumhuriyeti
+Prag
+Macaristan
+Budapeþte
+Moldova
+Kiþinev
+Polonya
+Varþova
+Romanya
+Bükreþ
+Slovakya
+Bratislava
+Ukrayna
+Kiev
+Danimarka
+Kopenhag
+Estonya
+Tallinn
+Finlandiya
+Helsinki
+Ýsveç
+Stokholm
+Ýzlanda
+Reykjavik
+Letonya
+Riga
+Litvanya
+Vilnius
+Norveç
+Oslo
+Andorra
+Andorra la Vella
+Arnavutluk
+Tiran
+Bosna-Hersek
+Saraybosna
+Hýrvatistan
+Zagreb
+Ýspanya
+Madrid
+Ýtalya
+Roma
+Karadað
+Podgorica
+Makedonya
+Üsküp
+Malta
+Valetta
+Portekiz
+Lizbon
+San Marino
+Sýrbistan
+Belgrad
+Slovenya
+Ljubljana
+Vatikan
+Yunanistan
+Atina
+Azerbaycan
+Bakü
+Ermenistan
+Erivan
+Gürcistan
+Tiflis
+Kazakistan
+Astana
+Kýbrýs
+Lefkoþa
+Rusya
+Moskova
+Türkiye
+Ankara
+Abhazya
+Sohum
+Daðlýk Karabað
+Hankendi
+Güney Osetya
+Tshinvali
+Kosova
+Priþtine
+Kuzey Kýbrýs
+Lefkoþa
+Transdinyester
+Tiraspol
